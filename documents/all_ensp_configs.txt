@@ -1,0 +1,540 @@
+
+==
+File: AR1.cfg
+==
+
+sysname AR1
+#
+interface GigabitEthernet0/0/0
+ ip address 156.0.10.21 255.255.255.252
+#
+interface GigabitEthernet0/0/1
+ ip address 156.0.10.9 255.255.255.252
+#
+interface GigabitEthernet0/0/2
+ ip address 192.10.6.1 255.255.255.252
+#
+ospf 1 router-id 156.0.10.21
+ area 0.0.0.0
+  network 156.0.10.8 0.0.0.3
+  network 156.0.10.20 0.0.0.3
+  network 192.10.6.0 0.0.0.3
+
+==
+File: AR2.cfg
+==
+
+sysname AR2
+#
+interface GigabitEthernet0/0/0
+ ip address 156.0.10.22 255.255.255.252
+#
+interface GigabitEthernet0/0/1
+ ip address 156.0.10.17 255.255.255.252
+#
+interface GigabitEthernet0/0/2
+ ip address 156.0.10.13 255.255.255.252
+#
+ospf 1 router-id 156.0.10.22
+ area 0.0.0.0
+  network 156.0.10.12 0.0.0.3
+  network 156.0.10.16 0.0.0.3
+  network 156.0.10.20 0.0.0.3
+
+==
+File: AR3.cfg
+==
+
+sysname AR3
+#
+interface GigabitEthernet0/0/0
+ ip address 156.0.10.2 255.255.255.252
+#
+interface GigabitEthernet0/0/1
+ ip address 156.0.10.18 255.255.255.252
+#
+ospf 1 router-id 156.0.10.2
+ area 0.0.0.0
+  network 156.0.10.0 0.0.0.3
+  network 156.0.10.16 0.0.0.3
+
+==
+File: AR4.cfg
+==
+
+sysname AR4
+#
+interface GigabitEthernet0/0/0
+ ip address 156.0.10.6 255.255.255.252
+#
+interface GigabitEthernet0/0/1
+ ip address 156.0.10.10 255.255.255.252
+#
+interface GigabitEthernet0/0/2
+ ip address 156.0.10.14 255.255.255.252
+#
+ospf 1 router-id 156.0.10.6
+ area 0.0.0.0
+  network 156.0.10.4 0.0.0.3
+  network 156.0.10.8 0.0.0.3
+  network 156.0.10.12 0.0.0.3
+
+==
+File: ISP.cfg
+==
+
+sysname ISP
+#
+interface GigabitEthernet0/0/0
+ ip address 156.0.10.1 255.255.255.252
+#
+interface GigabitEthernet0/0/1
+ ip address 156.0.10.5 255.255.255.252
+#
+interface GigabitEthernet0/0/2
+ ip address 177.0.10.1 255.255.255.240
+ vrrp vrid 1 virtual-ip 177.0.10.1
+ vrrp vrid 1 priority 100
+#
+interface GigabitEthernet0/0/3
+ ip address 144.0.10.1 255.255.255.240
+ vrrp vrid 2 virtual-ip 144.0.10.1
+ vrrp vrid 2 priority 120
+ vrrp vrid 2 preempt-mode timer delay 0
+#
+ospf 1 router-id 156.0.10.1
+ area 0.0.0.0
+  network 156.0.10.0 0.0.0.3
+  network 156.0.10.4 0.0.0.3
+  network 177.0.10.0 0.0.0.15
+  network 144.0.10.0 0.0.0.15
+#
+ip route-static 0.0.0.0 0.0.0.0 Null0
+
+==
+File: LSW1.cfg
+==
+
+#
+sysname LSW1
+#
+vlan batch 10 11 12 13 18
+#
+interface Vlanif10
+ ip address 172.16.10.2 255.255.255.0
+ vrrp vrid 10 virtual-ip 172.16.10.1
+ vrrp vrid 10 priority 120
+ vrrp vrid 10 preempt-mode timer delay 0
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif11
+ ip address 192.168.10.2 255.255.255.0
+ vrrp vrid 11 virtual-ip 192.168.10.1
+ vrrp vrid 11 priority 120
+ vrrp vrid 11 preempt-mode timer delay 0
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif12
+ ip address 10.0.10.2 255.255.255.0
+ vrrp vrid 12 virtual-ip 10.0.10.1
+ vrrp vrid 12 priority 100
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif13
+ ip address 10.1.10.2 255.255.255.0
+ vrrp vrid 13 virtual-ip 10.1.10.1
+ vrrp vrid 13 priority 100
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif18
+ ip address 192.168.11.2 255.255.255.240
+ vrrp vrid 18 virtual-ip 192.168.11.1
+ vrrp vrid 18 priority 110
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface GigabitEthernet0/0/1
+ port link-type trunk
+ port trunk allow-pass vlan all
+ stp instance 1 cost 1000
+ stp instance 2 cost 2000
+#
+interface GigabitEthernet0/0/2
+ port link-type trunk
+ port trunk allow-pass vlan all
+ stp instance 1 cost 1500
+ stp instance 2 cost 2500
+#
+interface GigabitEthernet0/0/3
+ port link-type trunk
+ port trunk allow-pass vlan all
+ stp instance 1 cost 2000
+ stp instance 2 cost 3000
+#
+interface GigabitEthernet0/0/0
+ port link-type trunk
+ port trunk allow-pass vlan 10 11 12 13 18
+#
+interface GigabitEthernet0/0/4
+ port link-type access
+ port default vlan 11
+#
+interface GigabitEthernet0/0/5
+ port link-type access
+ port default vlan 11
+#
+interface GigabitEthernet0/0/6
+ port link-type access
+ port default vlan 11
+#
+stp region-configuration
+ region-name MSTP_REGION
+ revision-level 1
+ instance 1 vlan 10 11 18
+ instance 2 vlan 12 13
+ active region-configuration
+#
+stp mode mstp
+stp instance 1 root primary
+stp instance 2 root secondary
+#
+ip route-static 0.0.0.0 0.0.0.0 177.0.10.1
+ip route-static 0.0.0.0 0.0.0.0 144.0.10.1 preference 100
+#
+dhcp enable
+#
+return
+
+==
+File: LSW2.cfg
+==
+
+#
+sysname LSW2
+#
+vlan batch 10 11 12 13 18
+#
+interface Vlanif10
+ ip address 172.16.10.3 255.255.255.0
+ vrrp vrid 10 virtual-ip 172.16.10.1
+ vrrp vrid 10 priority 100
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif11
+ ip address 192.168.10.3 255.255.255.0
+ vrrp vrid 11 virtual-ip 192.168.10.1
+ vrrp vrid 11 priority 100
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif12
+ ip address 10.0.10.3 255.255.255.0
+ vrrp vrid 12 virtual-ip 10.0.10.1
+ vrrp vrid 12 priority 120
+ vrrp vrid 12 preempt-mode timer delay 0
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif13
+ ip address 10.1.10.3 255.255.255.0
+ vrrp vrid 13 virtual-ip 10.1.10.1
+ vrrp vrid 13 priority 120
+ vrrp vrid 13 preempt-mode timer delay 0
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface Vlanif18
+ ip address 192.168.11.3 255.255.255.240
+ vrrp vrid 18 virtual-ip 192.168.11.1
+ vrrp vrid 18 priority 100
+ dhcp select relay
+ dhcp relay server-ip 192.168.10.10
+#
+interface GigabitEthernet0/0/1
+ port link-type trunk
+ port trunk allow-pass vlan all
+ stp instance 1 cost 2000
+ stp instance 2 cost 1000
+#
+interface GigabitEthernet0/0/2
+ port link-type trunk
+ port trunk allow-pass vlan all
+ stp instance 1 cost 2500
+ stp instance 2 cost 1500
+#
+interface GigabitEthernet0/0/3
+ port link-type trunk
+ port trunk allow-pass vlan all
+ stp instance 1 cost 3000
+ stp instance 2 cost 2000
+#
+interface GigabitEthernet0/0/0
+ port link-type trunk
+ port trunk allow-pass vlan 10 11 12 13 18
+#
+interface GigabitEthernet0/0/4
+ port link-type access
+ port default vlan 11
+#
+interface GigabitEthernet0/0/5
+ port link-type access
+ port default vlan 11
+#
+interface GigabitEthernet0/0/6
+ port link-type access
+ port default vlan 11
+#
+stp region-configuration
+ region-name MSTP_REGION
+ revision-level 1
+ instance 1 vlan 10 11 18
+ instance 2 vlan 12 13
+ active region-configuration
+#
+stp mode mstp
+stp instance 1 root secondary
+stp instance 2 root primary
+#
+ip route-static 0.0.0.0 0.0.0.0 144.0.10.1
+ip route-static 0.0.0.0 0.0.0.0 177.0.10.1 preference 100
+#
+dhcp enable
+#
+return
+
+==
+File: LSW3.cfg
+==
+
+#
+sysname LSW3
+#
+vlan batch 10 11 12 13 18
+#
+interface GigabitEthernet0/0/0
+ port link-type trunk
+ port trunk allow-pass vlan all
+#
+interface GigabitEthernet0/0/1
+ port link-type trunk
+ port trunk allow-pass vlan all
+#
+interface GigabitEthernet0/0/2
+ port link-type access
+ port default vlan 10
+#
+stp region-configuration
+ region-name MSTP_REGION
+ revision-level 1
+ instance 1 vlan 10 11
+ instance 2 vlan 12 13
+ active region-configuration
+#
+stp mode mstp
+#
+return
+
+==
+File: LSW4.cfg
+==
+
+#
+sysname LSW4
+#
+vlan batch 10 11 12 13 18
+#
+interface GigabitEthernet0/0/0
+ port link-type trunk
+ port trunk allow-pass vlan all
+#
+interface GigabitEthernet0/0/1
+ port link-type trunk
+ port trunk allow-pass vlan all
+#
+interface GigabitEthernet0/0/2
+ port link-type access
+ port default vlan 12
+#
+stp region-configuration
+ region-name MSTP_REGION
+ revision-level 1
+ instance 1 vlan 10 11
+ instance 2 vlan 12 13
+ active region-configuration
+#
+stp mode mstp
+#
+return
+
+==
+File: mikrotik.cfg
+==
+
+/system identity set name="DHCP-Server"
+#
+/interface bonding add name=bond1 slaves=ether1,ether2 mode=active-backup
+#
+/interface vlan add name=vlan10 interface=bond1 vlan-id=10
+/interface vlan add name=vlan11 interface=bond1 vlan-id=11
+/interface vlan add name=vlan12 interface=bond1 vlan-id=12
+/interface vlan add name=vlan13 interface=bond1 vlan-id=13
+/interface vlan add name=vlan18 interface=bond1 vlan-id=18
+#
+/ip address add address=172.16.10.10/24 interface=vlan10
+/ip address add address=192.168.10.10/24 interface=vlan11
+/ip address add address=10.0.10.10/24 interface=vlan12
+/ip address add address=10.1.10.10/24 interface=vlan13
+/ip address add address=192.168.11.10/28 interface=vlan18
+#
+/ip pool add name=vlan10-pool ranges=172.16.10.100-172.16.10.200
+/ip pool add name=vlan11-pool ranges=192.168.10.100-192.168.10.200
+/ip pool add name=vlan12-pool ranges=10.0.10.100-10.0.10.200
+/ip pool add name=vlan13-pool ranges=10.1.10.100-10.1.10.200
+/ip pool add name=vlan18-pool ranges=192.168.11.10-192.168.11.14
+#
+/ip dhcp-server network add address=172.16.10.0/24 gateway=172.16.10.1 dns-server=192.168.10.11
+/ip dhcp-server network add address=192.168.10.0/24 gateway=192.168.10.1 dns-server=192.168.10.11
+/ip dhcp-server network add address=10.0.10.0/24 gateway=10.0.10.1 dns-server=192.168.10.11
+/ip dhcp-server network add address=10.1.10.0/24 gateway=10.1.10.1 dns-server=192.168.10.11
+/ip dhcp-server network add address=192.168.11.0/28 gateway=192.168.11.1 dns-server=192.168.10.11
+#
+/ip dhcp-server add name=dhcp-vlan10 address-pool=vlan10-pool interface=vlan10 disabled=no
+/ip dhcp-server add name=dhcp-vlan11 address-pool=vlan11-pool interface=vlan11 disabled=no
+/ip dhcp-server add name=dhcp-vlan12 address-pool=vlan12-pool interface=vlan12 disabled=no
+/ip dhcp-server add name=dhcp-vlan13 address-pool=vlan13-pool interface=vlan13 disabled=no
+/ip dhcp-server add name=dhcp-vlan18 address-pool=vlan18-pool interface=vlan18 disabled=no
+#
+/ip route add dst-address=0.0.0.0/0 gateway=192.168.10.1
+
+==
+File: Router1.cfg
+==
+
+sysname Router1
+#
+interface GigabitEthernet0/0/0
+ ip address 177.0.10.2 255.255.255.240
+ vrrp vrid 1 virtual-ip 177.0.10.1
+ vrrp vrid 1 priority 120
+ vrrp vrid 1 preempt-mode timer delay 0
+ nat outbound 2000
+#
+interface GigabitEthernet0/0/1
+ port link-type trunk
+ port trunk allow-pass vlan 10 11 12 13 18
+
+interface GigabitEthernet0/0/1.10
+ vlan-type dot1q 10
+ ip address 172.16.10.254 255.255.255.0
+
+interface GigabitEthernet0/0/1.11
+ vlan-type dot1q 11
+ ip address 192.168.10.254 255.255.255.0
+
+interface GigabitEthernet0/0/1.12
+ vlan-type dot1q 12
+ ip address 10.0.10.254 255.255.255.0
+
+interface GigabitEthernet0/0/1.13
+ vlan-type dot1q 13
+ ip address 10.1.10.254 255.255.255.0
+
+interface GigabitEthernet0/0/1.18
+ vlan-type dot1q 18
+ ip address 192.168.11.254 255.255.255.240
+#
+ip route-static 172.16.10.0 255.255.255.0 172.16.10.2
+ip route-static 192.168.10.0 255.255.255.0 192.168.10.2
+ip route-static 10.0.10.0 255.255.255.0 10.0.10.2
+ip route-static 10.1.10.0 255.255.255.0 10.1.10.2
+ip route-static 192.168.11.0 255.255.255.240 192.168.11.2
+#
+interface Tunnel0/0/0
+ ip address 192.168.255.1 255.255.255.252
+ tunnel-protocol ipsec
+ source GigabitEthernet0/0/0
+ destination 192.10.6.2
+ ipsec policy voip-policy
+#
+ipsec proposal voip-prop
+ encryption-algorithm aes-256
+ authentication-algorithm sha2-256
+#
+ipsec policy voip-policy 10
+ proposal voip-prop
+ sa duration 3600
+#
+ip route-static 172.16.20.0 255.255.255.0 Tunnel0/0/0
+ip route-static 0.0.0.0 0.0.0.0 177.0.10.1
+#
+acl number 2000
+ rule 5 permit source 172.16.10.0 0.0.0.255
+ rule 10 permit source 192.168.10.0 0.0.0.255
+ rule 15 permit source 10.0.10.0 0.0.0.255
+ rule 20 permit source 10.1.10.0 0.0.0.255
+ rule 25 permit source 192.168.11.0 0.0.0.15 
+#
+ospf 1 router-id 177.0.10.2
+ area 0.0.0.0
+  network 192.168.11.0 0.0.0.15
+  network 192.168.255.0 0.0.0.3
+
+==
+File: Router2.cfg
+==
+
+sysname Router2
+#
+interface GigabitEthernet0/0/0
+ ip address 144.0.10.2 255.255.255.240
+ vrrp vrid 2 virtual-ip 144.0.10.1
+ vrrp vrid 2 priority 100
+ nat outbound 2000
+#
+interface GigabitEthernet0/0/1
+ port link-type trunk
+ port trunk allow-pass vlan 10 11 12 13 18
+
+interface GigabitEthernet0/0/1.10
+ vlan-type dot1q 10
+ ip address 172.16.10.253 255.255.255.0
+
+interface GigabitEthernet0/0/1.11
+ vlan-type dot1q 11
+ ip address 192.168.10.253 255.255.255.0
+
+interface GigabitEthernet0/0/1.12
+ vlan-type dot1q 12
+ ip address 10.0.10.253 255.255.255.0
+
+interface GigabitEthernet0/0/1.13
+ vlan-type dot1q 13
+ ip address 10.1.10.253 255.255.255.0
+
+interface GigabitEthernet0/0/1.18
+ vlan-type dot1q 18
+ ip address 192.168.11.253 255.255.255.240
+#
+ip route-static 172.16.10.0 255.255.255.0 172.16.10.3
+ip route-static 192.168.10.0 255.255.255.0 192.168.10.3
+ip route-static 10.0.10.0 255.255.255.0 10.0.10.3
+ip route-static 10.1.10.0 255.255.255.0 10.1.10.3
+ip route-static 192.168.11.0 255.255.255.240 192.168.11.3
+#
+ip route-static 0.0.0.0 0.0.0.0 144.0.10.1
+#
+acl number 2000
+ rule 5 permit source 172.16.10.0 0.0.0.255
+ rule 10 permit source 192.168.10.0 0.0.0.255
+ rule 15 permit source 10.0.10.0 0.0.0.255
+ rule 20 permit source 10.1.10.0 0.0.0.255
+ rule 25 permit source 192.168.11.0 0.0.0.15
+#
+ospf 1 router-id 144.0.10.2
+ area 0.0.0.0
+  network 192.168.11.0 0.0.0.15
