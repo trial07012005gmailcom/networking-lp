@@ -1,0 +1,2094 @@
+
+==
+File: ESW1.cfg
+==
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ESW1
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 cisco123
+!
+!
+ip routing
+!
+!
+!
+!
+vtp domain cisco.com
+vtp mode server
+vtp password cisco
+vtp version 2
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 10 priority 24576
+spanning-tree vlan 11 priority 24576
+spanning-tree vlan 12 priority 24576
+spanning-tree vlan 13 priority 28672
+spanning-tree vlan 15 priority 28672
+!
+vlan internal allocation policy ascending
+!
+vlan 10
+ name gerencia
+!
+vlan 11
+ name administracion
+!
+vlan 12
+ name VoIP
+!
+vlan 13
+ name IT
+!
+vlan 15
+ name Admin_Equipos
+!
+vlan 18
+ name VLAN18
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet0/1
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/4
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/5
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/6
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/7
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/8
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/9
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/10
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/11
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/12
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/13
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/14
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/15
+ no switchport
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan10
+ ip address 10.0.10.2 255.255.255.0
+ ip helper-address 10.1.10.11
+ standby 10 ip 10.0.10.1
+ standby 10 priority 110
+ standby 10 preempt
+!
+interface Vlan11
+ ip address 192.168.10.2 255.255.255.0
+ ip helper-address 10.1.10.11
+ standby 11 ip 192.168.10.1
+ standby 11 priority 110
+ standby 11 preempt
+!
+interface Vlan12
+ ip address 172.16.10.2 255.255.255.0
+ ip helper-address 10.1.10.11
+ standby 12 ip 172.16.10.1
+ standby 12 priority 110
+ standby 12 preempt
+!
+interface Vlan13
+ ip address 10.1.10.2 255.255.255.0
+ standby 13 ip 10.1.10.1
+ standby 13 priority 100
+!
+interface Vlan15
+ ip address 172.1.10.2 255.255.255.0
+ ip access-group 100 in
+ standby 15 ip 172.1.10.1
+ standby 15 priority 100
+!
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 145.0.10.1
+!
+!
+ip http server
+ip http secure-server
+!
+access-list 100 permit ip 10.1.10.0 0.0.0.255 172.1.10.0 0.0.0.255
+access-list 100 deny   ip any 172.1.10.0 0.0.0.255
+access-list 100 permit ip any any
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+end
+==
+File: ESW2.cfg
+==
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ESW2
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 cisco123
+!
+!
+ip routing
+!
+!
+!
+!
+vtp domain cisco.com
+vtp mode server
+vtp password cisco
+vtp version 2
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 10 priority 28672
+spanning-tree vlan 11 priority 28672
+spanning-tree vlan 12 priority 28672
+spanning-tree vlan 13 priority 24576
+spanning-tree vlan 15 priority 24576
+!
+vlan internal allocation policy ascending
+!
+vlan 10
+ name gerencia
+!
+vlan 11
+ name administracion
+!
+vlan 12
+ name VoIP
+!
+vlan 13
+ name IT
+!
+vlan 15
+ name Admin_Equipos
+!
+vlan 18
+ name VLAN18
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet0/1
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/4
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/5
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/6
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/7
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/8
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/9
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/10
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/11
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/12
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/13
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/14
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/15
+ no switchport
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan10
+ ip address 10.0.10.3 255.255.255.0
+ ip helper-address 10.1.10.11
+ standby 10 ip 10.0.10.1
+ standby 10 priority 100
+!
+interface Vlan11
+ ip address 192.168.10.3 255.255.255.0
+ ip helper-address 10.1.10.11
+ standby 11 ip 192.168.10.1
+ standby 11 priority 100
+!
+interface Vlan12
+ ip address 172.16.10.3 255.255.255.0
+ ip helper-address 10.1.10.11
+ standby 12 ip 172.16.10.1
+ standby 12 priority 100
+!
+interface Vlan13
+ ip address 10.1.10.3 255.255.255.0
+ standby 13 ip 10.1.10.1
+ standby 13 priority 110
+ standby 13 preempt
+!
+interface Vlan15
+ ip address 172.1.10.3 255.255.255.0
+ ip access-group 100 in
+ standby 15 ip 172.1.10.1
+ standby 15 priority 110
+ standby 15 preempt
+!
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 66.2.10.1
+!
+!
+ip http server
+ip http secure-server
+!
+access-list 100 permit ip 10.1.10.0 0.0.0.255 172.1.10.0 0.0.0.255
+access-list 100 deny   ip any 172.1.10.0 0.0.0.255
+access-list 100 permit ip any any
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+end
+==
+File: ESW3.cfg
+==
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ESW3
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 cisco123
+!
+!
+!
+!
+!
+!
+vtp domain cisco.com
+vtp mode client
+vtp password cisco
+vtp version 2
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet0/1
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/2
+ switchport access vlan 11
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/3
+ switchport access vlan 10
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/4
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/5
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/6
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/7
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/8
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/9
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/10
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/11
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/12
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/13
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/14
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/15
+ no switchport
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan15
+ ip address 172.1.10.10 255.255.255.0
+!
+!
+ip classless
+ip default-gateway 172.1.10.1
+!
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+end
+==
+File: ESW4.cfg
+==
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ESW4
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 cisco123
+!
+!
+!
+!
+!
+!
+vtp domain cisco.com
+vtp mode client
+vtp password cisco
+vtp version 2
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet0/1
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/2
+ switchport access vlan 10
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/3
+ switchport access vlan 11
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/4
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/5
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/6
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/7
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/8
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/9
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/10
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/11
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/12
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/13
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/14
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/15
+ no switchport
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan15
+ ip address 172.1.10.11 255.255.255.0
+!
+!
+ip classless
+ip default-gateway 172.1.10.1
+!
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+end
+==
+File: ESW5.cfg
+==
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ESW5
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 cisco123
+!
+!
+!
+!
+!
+!
+vtp domain cisco.com
+vtp mode client
+vtp password cisco
+vtp version 2
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet0/1
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/2
+ switchport access vlan 13
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/3
+ switchport access vlan 13
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/4
+ switchport access vlan 13
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/5
+ switchport access vlan 12
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/6
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/7
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/8
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/9
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/10
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/11
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/12
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/13
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/14
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/15
+ no switchport
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan15
+ ip address 172.1.10.12 255.255.255.0
+!
+!
+ip classless
+ip default-gateway 172.1.10.1
+!
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+end
+==
+File: ESW6.cfg
+==
+
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ESW6
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 cisco123
+!
+!
+!
+!
+!
+!
+vtp domain cisco.com
+vtp mode client
+vtp password cisco
+vtp version 2
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet0/1
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+!
+interface FastEthernet1/2
+ switchport access vlan 13
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/3
+ switchport access vlan 13
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/4
+ switchport access vlan 13
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/5
+ switchport access vlan 12
+ switchport mode access
+ no shutdown
+!
+interface FastEthernet1/6
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/7
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/8
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/9
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/10
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/11
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/12
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/13
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/14
+ no switchport
+ no ip address
+ shutdown
+!
+interface FastEthernet1/15
+ no switchport
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan15
+ ip address 172.1.10.13 255.255.255.0
+!
+!
+ip classless
+ip default-gateway 172.1.10.1
+!
+!
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login
+!
+!
+end
+==
+File: ISP.cfg
+==
+
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ISP
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+!
+interface Loopback1
+ ip address 8.8.4.4 255.255.255.255
+!
+interface FastEthernet0/0
+ ip address 192.10.0.1 255.255.255.252
+ no shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ ip address 192.10.1.1 255.255.255.252
+ no shutdown
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+!
+interface FastEthernet2/0
+ ip address 66.2.10.1 255.255.255.240
+ no shutdown
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+!
+interface FastEthernet3/0
+ ip address 145.0.10.1 255.255.255.240
+ no shutdown
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 1.1.1.1
+ log-adjacency-changes
+ network 8.8.4.4 0.0.0.0 area 0
+ network 8.8.8.8 0.0.0.0 area 0
+ network 66.2.10.0 0.0.0.15 area 0
+ network 145.0.10.0 0.0.0.15 area 0
+ network 192.10.0.0 0.0.0.3 area 0
+ network 192.10.1.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
+==
+File: R1.cfg
+==
+
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.10.5.1 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ standby 1 ip 192.10.5.254
+ standby 1 priority 110
+ standby 1 preempt
+ no shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ ip address 192.10.4.2 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ no shutdown
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 1.1.1.1
+ log-adjacency-changes
+ network 192.10.4.0 0.0.0.3 area 0
+ network 192.10.5.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+ip route 0.0.0.0 0.0.0.0 192.10.4.1
+ip route 10.0.10.0 255.255.255.0 145.0.10.2
+ip route 10.1.10.0 255.255.255.0 145.0.10.2
+ip route 172.1.10.0 255.255.255.0 145.0.10.2
+ip route 172.16.10.0 255.255.255.0 145.0.10.2
+ip route 192.168.10.0 255.255.255.0 145.0.10.2
+!
+!
+no ip http server
+no ip http secure-server
+ip nat pool INTERNET 192.10.4.2 192.10.4.2 netmask 255.255.255.252
+ip nat inside source list 1 pool INTERNET overload
+ip nat inside source static tcp 10.1.10.10 80 192.10.4.2 80
+ip nat inside source static tcp 10.1.10.10 53 192.10.4.2 53
+ip nat inside source static udp 10.1.10.10 53 192.10.4.2 53
+!
+access-list 1 permit 10.0.10.0 0.0.0.255
+access-list 1 permit 10.1.10.0 0.0.0.255
+access-list 1 permit 172.1.10.0 0.0.0.255
+access-list 1 permit 172.16.10.0 0.0.0.255
+access-list 1 permit 192.168.10.0 0.0.0.255
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
+==
+File: R2.cfg
+==
+
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.10.5.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ standby 1 ip 192.10.5.254
+ standby 1 priority 100
+ no shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ ip address 192.10.3.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ no shutdown
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+!
+interface FastEthernet2/0
+ ip address 192.10.2.1 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ no shutdown
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+!
+interface FastEthernet3/0
+ ip address 192.168.10.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ no shutdown
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 2.2.2.2
+ log-adjacency-changes
+ network 192.10.2.0 0.0.0.3 area 0
+ network 192.10.3.0 0.0.0.3 area 0
+ network 192.10.5.0 0.0.0.3 area 0
+ network 192.168.10.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+ip route 0.0.0.0 0.0.0.0 192.10.2.2
+ip route 10.0.10.0 255.255.255.0 66.2.10.2
+ip route 10.1.10.0 255.255.255.0 66.2.10.2
+ip route 172.1.10.0 255.255.255.0 66.2.10.2
+ip route 172.16.10.0 255.255.255.0 66.2.10.2
+ip route 192.168.10.0 255.255.255.0 66.2.10.2
+!
+!
+no ip http server
+no ip http secure-server
+ip nat pool INTERNET 192.10.2.1 192.10.2.1 netmask 255.255.255.252
+ip nat inside source list 1 pool INTERNET overload
+ip nat inside source static tcp 10.1.10.10 80 192.10.2.1 80
+ip nat inside source static tcp 10.1.10.10 53 192.10.2.1 53
+ip nat inside source static udp 10.1.10.10 53 192.10.2.1 53
+!
+access-list 1 permit 10.0.10.0 0.0.0.255
+access-list 1 permit 10.1.10.0 0.0.0.255
+access-list 1 permit 172.1.10.0 0.0.0.255
+access-list 1 permit 172.16.10.0 0.0.0.255
+access-list 1 permit 192.168.10.0 0.0.0.255
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
+==
+File: R3.cfg
+==
+
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.10.0.2 255.255.255.252
+ no shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ ip address 192.10.4.1 255.255.255.252
+ no shutdown
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+!
+interface FastEthernet2/0
+ ip address 192.10.3.2 255.255.255.252
+ no shutdown
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 3.3.3.3
+ log-adjacency-changes
+ network 192.10.0.0 0.0.0.3 area 0
+ network 192.10.3.0 0.0.0.3 area 0
+ network 192.10.4.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
+==
+File: R4.cfg
+==
+
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.10.1.2 255.255.255.252
+ no shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ ip address 192.10.2.2 255.255.255.252
+ no shutdown
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 4.4.4.4
+ log-adjacency-changes
+ network 192.10.1.0 0.0.0.3 area 0
+ network 192.10.2.0 0.0.0.3 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
+==
+File: R5.cfg
+==
+
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 145.0.10.2 255.255.255.240
+ no shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ ip address 145.0.10.14 255.255.255.240
+ no shutdown
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 5.5.5.5
+ log-adjacency-changes
+ network 145.0.10.0 0.0.0.15 area 0
+!
+ip forward-protocol nd
+!
+ip route 10.0.10.0 255.255.255.0 10.0.10.2
+ip route 10.1.10.0 255.255.255.0 10.1.10.2
+ip route 172.1.10.0 255.255.255.0 172.1.10.2
+ip route 172.16.10.0 255.255.255.0 172.16.10.2
+ip route 192.168.10.0 255.255.255.0 192.168.10.2
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
+==
+File: R6.cfg
+==
+
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R6
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 66.2.10.2 255.255.255.240
+ no shutdown
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+!
+interface FastEthernet1/0
+ ip address 66.2.10.14 255.255.255.240
+ no shutdown
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 6.6.6.6
+ log-adjacency-changes
+ network 66.2.10.0 0.0.0.15 area 0
+!
+ip forward-protocol nd
+!
+ip route 10.0.10.0 255.255.255.0 10.0.10.3
+ip route 10.1.10.0 255.255.255.0 10.1.10.3
+ip route 172.1.10.0 255.255.255.0 172.1.10.3
+ip route 172.16.10.0 255.255.255.0 172.16.10.3
+ip route 192.168.10.0 255.255.255.0 192.168.10.3
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
