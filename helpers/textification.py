@@ -36,9 +36,9 @@ def collect_configs(source_dir, output_dir, output_filename, extensions=None):
 
 if __name__ == "__main__":
     # 🔧 Change these variables as needed
-    SOURCE_DIR = r"D:\Education\UPB\Courses\APLICACIONES CON REDES\TP\pf\gns3\confs"
-    OUTPUT_DIR = r"D:\Education\UPB\Courses\APLICACIONES CON REDES\TP\pf"  # Where you want the text file to be saved
-    OUTPUT_FILE = "all_gns3_configs.txt"
+    SOURCE_DIR = r"D:\Education\UPB\Courses\APLICACIONES CON REDES\TP\pf\ensp\confs"
+    OUTPUT_DIR = r"D:\Education\UPB\Courses\APLICACIONES CON REDES\TP\pf\documents"  # Where you want the text file to be saved
+    OUTPUT_FILE = "all_ensp_configs.txt"
     EXTENSIONS = [".cfg", ".txt", ".conf"]  # Allowed file types
 
     collect_configs(SOURCE_DIR, OUTPUT_DIR, OUTPUT_FILE, EXTENSIONS)
